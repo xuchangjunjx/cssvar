@@ -1,17 +1,46 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <theme ref="theme"></theme>
+    <cssTest/>
+    <input type="color" v-model="theme.red" @change="change">
+    <input type="color" v-model="theme.blue" @change="change">
+    <button @click="addTheme">change</button>
+    <button @click="reset">reset</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import cssTest from "./components/cssTest.vue";
 export default {
   name: "app",
+  data() {
+    return {
+      primary: "",
+      theme: {
+        blue: "",
+        red: ""
+      }
+    };
+  },
   components: {
-    HelloWorld
+    cssTest
+  },
+  mounted() {},
+  methods: {
+    change() {
+      this.$refs.theme.addTheme("template", this.theme).use("template");
+    },
+    reset() {
+      this.$refs.theme.use("default");
+    },
+    addTheme() {
+      this.$refs.theme
+        .addTheme("test", {
+          blue: "red",
+          red: "blue"
+        })
+        .use("test");
+    }
   }
 };
 </script>
